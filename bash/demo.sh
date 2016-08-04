@@ -20,8 +20,8 @@ tower-cli group create --inventory="blank_inventory" --name="blank_group" --desc
 tower-cli credential create --name "blank_credential" --kind "ssh" --organization "Default" --description="$cli_flag"
 
 # Job Templates
-tower-cli job_template create --name="Hello World" --inventory="blank_inventory" --machine-credential="blank_credential" --project="AlanCoding examples" --playbook="helloworld.yml"
-tower-cli job_template create --name="Hello World prompting" --inventory="blank_inventory" --machine-credential="blank_credential" --project="AlanCoding examples" --playbook="helloworld.yml" --ask-variables-on-launch=true --ask-limit-on-launch=true --ask-tags-on-launch=true --ask-job-type-on-launch=true --ask-inventory-on-launch=true --ask-credential-on-launch=true --extra-vars="jt_var: value"
+tower-cli job_template create --name="Hello World" --inventory="blank_inventory" --machine-credential="blank_credential" --project="AlanCoding examples" --playbook="helloworld_multiple_plays.yml"
+tower-cli job_template create --name="Hello World prompting" --inventory="blank_inventory" --machine-credential="blank_credential" --project="AlanCoding examples" --playbook="helloworld_multiple_plays.yml" --ask-variables-on-launch=true --ask-limit-on-launch=true --ask-tags-on-launch=true --ask-job-type-on-launch=true --ask-inventory-on-launch=true --ask-credential-on-launch=true --extra-vars="jt_var: value"
 
 
 # User structure examples

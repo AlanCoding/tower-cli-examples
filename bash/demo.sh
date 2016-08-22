@@ -23,19 +23,29 @@ tower-cli credential create --name "blank_credential" --kind "ssh" --organizatio
 tower-cli job_template create --name="Hello World" --inventory="blank_inventory" --machine-credential="blank_credential" --project="AlanCoding examples" --playbook="helloworld_multiple_plays.yml"
 tower-cli job_template create --name="Hello World prompting" --inventory="blank_inventory" --machine-credential="blank_credential" --project="AlanCoding examples" --playbook="helloworld_multiple_plays.yml" --ask-variables-on-launch=true --ask-limit-on-launch=true --ask-tags-on-launch=true --ask-job-type-on-launch=true --ask-inventory-on-launch=true --ask-credential-on-launch=true --extra-vars="jt_var: value"
 
+# Example users
+tower-cli user create --username="sys_admin" --password="$pass" --email="user@redhat.com" --is-superuser=true
+tower-cli user create --username="sys_auditor" --password="$pass" --email="user@redhat.com" --is-system-auditor=true
+tower-cli user create --username="org_auditor" --password="$pass" --email="user@redhat.com"
+tower-cli role grant --type="auditor" --organization="Default" --user="org_auditor"
+tower-cli role grant --type="member" --organization="Default" --user="org_auditor"
+tower-cli user create --username="org_admin" --password="$pass" --email="org_admin@redhat.com"
+tower-cli organization associate_admin --organization="Default" --user="org_admin"
+tower-cli organization associate --organization="Default" --user="org_admin"
+tower-cli user create --username="org_member" --password="$pass" --email="org_member@redhat.com"
+tower-cli organization associate --organization="Default" --user="org_member"
+tower-cli user create --username="orphan_user" --password="$pass" --email="rando@redhat.com"
+
 
 # User structure examples
 tower-cli organization create --name "CLI_org" --description="$cli_flag"
-tower-cli user create --username="org_admin" --password="$pass" --email="org_admin@redhat.com"
-tower-cli organization associate_admin --organization="CLI_org" --user="org_admin"
-tower-cli organization associate --organization="CLI_org" --user="org_admin"
-tower-cli user create --username="org_member" --password="$pass" --email="member@redhat.com"
-tower-cli organization associate --organization="CLI_org" --user="org_member"
+tower-cli user create --username="cli_org_member" --password="$pass" --email="member@redhat.com"
+tower-cli organization associate --organization="CLI_org" --user="cli_org_member"
 
 tower-cli team create --name="ateam" --organization="CLI_org" --description="$cli_flag"
-tower-cli user create --username="team_member" --password="$pass" --email="dude@ansible.com"
+tower-cli user create --username="cli_team_member" --password="$pass" --email="dude@ansible.com"
 tower-cli user create --username="team_admin" --password="$pass" --email="admin@ansible.com"
-tower-cli team associate --team="ateam" --user="team_member"
+tower-cli team associate --team="ateam" --user="cli_team_member"
 tower-cli team associate --team="ateam" --user="team_admin"
 tower-cli role grant --type "admin" --target-team "ateam" --user "team_admin"
 

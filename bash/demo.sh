@@ -23,6 +23,9 @@ tower-cli credential create --name "blank_credential" --kind "ssh" --organizatio
 tower-cli job_template create --name="Hello World" --inventory="blank_inventory" --machine-credential="blank_credential" --project="AlanCoding examples" --playbook="helloworld_multiple_plays.yml"
 tower-cli job_template create --name="Hello World prompting" --inventory="blank_inventory" --machine-credential="blank_credential" --project="AlanCoding examples" --playbook="helloworld_multiple_plays.yml" --ask-variables-on-launch=true --ask-limit-on-launch=true --ask-tags-on-launch=true --ask-job-type-on-launch=true --ask-inventory-on-launch=true --ask-credential-on-launch=true --extra-vars="jt_var: value"
 
+# Inventory sscripts
+tower-cli inventory_script create --name="example-inv-script" --script='#!/usr/bin/env python\nimport os' --organization="Default"
+
 # Example users
 tower-cli user create --username="sys_admin" --password="$pass" --email="user@redhat.com" --is-superuser=true
 tower-cli user create --username="sys_auditor" --password="$pass" --email="user@redhat.com" --is-system-auditor=true
@@ -72,6 +75,10 @@ tower-cli role revoke --type "admin" --target-team "ateam" --user "former_member
 
 # Granting roles on normal resources
 tower-cli role grant --type "use" --inventory "blank_inventory" --team "ateam"
-tower-cli role grant --type "use" --credential "blank_credential" --team "ateam"
+# tower-cli role grant --type "use" --credential "blank_credential" --team "ateam"
 tower-cli role grant --type "use" --project "AlanCoding examples" --team "ateam"
 tower-cli role grant --type "execute" --job-template "Hello World" --team "ateam"
+
+# resource permission examples
+tower-cli user create --username="jt_admin" --password="$pass" --email="dude@ansible.com"
+tower-cli role grant --type "admin" --job-template "Hello World" --user "jt_admin"

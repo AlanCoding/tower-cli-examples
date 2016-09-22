@@ -5,6 +5,8 @@ tower-cli role grant --type member --organization Default --user res_perm
 for i in `seq 1 25`; do
     echo $i
     tower-cli inventory create --name=inv$i --organization=Default --description="made in CLI looping script"
+    tower-cli group create --inventory=inv$i --name=group$i --description="made in CLI looping script"
+    tower-cli host create --name=group$i --inventory=inv$i --description="made in CLI looping script"
     tower-cli project create --name=proj$i --organization=Default --scm-type git --scm-url https://github.com/AlanCoding/permission-testing-playbooks.git --description="made in CLI looping script" --monitor
     tower-cli credential create --name=cred$i --username="pi" --password="pass" --organization=Default --kind=ssh --description="made in CLI looping script"
     tower-cli job_template create --name=jt$i --inventory=inv$i --machine-credential=cred$i --project=proj$i --playbook=helloworld.yml --description="made in CLI looping script"

@@ -11,9 +11,9 @@ tower-cli project create --name="Ansible examples" --organization "Default" --sc
 tower-cli project create --name="jlaska examples" --organization "Default" --scm-type git --scm-url https://github.com/jlaska/ansible-playbooks.git --monitor
 
 # Inventories
-tower-cli inventory create --name=localhost --description="local machine" --organization=Default --description="$cli_flag"
+tower-cli inventory create --name=localhost --description="local machine" --variables="ansible_connection: local" --organization=Default --description="$cli_flag"
 tower-cli host create --name="127.0.0.1" --inventory="localhost"
-tower-cli inventory create --name="blank_inventory" --description="$cli_flag" --organization=Default
+tower-cli inventory create --name="blank_inventory" --variables="ansible_connection: local" --description="$cli_flag" --organization=Default
 tower-cli group create --inventory="blank_inventory" --name="blank_group" --description="$cli_flag"
 
 # Credentials

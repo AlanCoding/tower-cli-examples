@@ -5,10 +5,10 @@ pass="password"
 tower-cli organization create --name="Default" --description="$cli_flag"
 
 # Projects
-tower-cli project create --name="AlanCoding examples" --organization "Default" --scm-type git --scm-url https://github.com/AlanCoding/permission-testing-playbooks.git --monitor
-tower-cli project create --name="AlanCoding testing" --organization "Default" --scm-type git --scm-url https://github.com/AlanCoding/utility-playbooks.git --monitor
-tower-cli project create --name="Ansible examples" --organization "Default" --scm-type git --scm-url https://github.com/ansible/ansible-examples.git --monitor
-tower-cli project create --name="jlaska examples" --organization "Default" --scm-type git --scm-url https://github.com/jlaska/ansible-playbooks.git --monitor
+tower-cli project create --name="AlanCoding examples" --organization "Default" --scm-type git --scm-url https://github.com/AlanCoding/permission-testing-playbooks.git --wait
+tower-cli project create --name="AlanCoding testing" --organization "Default" --scm-type git --scm-url https://github.com/AlanCoding/utility-playbooks.git --wait
+tower-cli project create --name="Ansible examples" --organization "Default" --scm-type git --scm-url https://github.com/ansible/ansible-examples.git --wait
+tower-cli project create --name="jlaska examples" --organization "Default" --scm-type git --scm-url https://github.com/jlaska/ansible-playbooks.git --wait
 
 # Inventories
 tower-cli inventory create --name=localhost --variables="ansible_connection: local" --organization=Default --description="$cli_flag"

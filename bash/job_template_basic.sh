@@ -1,5 +1,4 @@
 cli_flag="created by tower-cli script"
-pass="password"
 
 # Organization
 tower-cli organization create --name="Default" --description="$cli_flag"

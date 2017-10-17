@@ -5,24 +5,26 @@
   tasks:
     - set_fact:
         my_status: "{{ ['ok','changed','unreachable','failed']|random }}"
+      when: "'_skip' not in ansible_host"
 
     - name: Echo facts about what we will do to the hosts
       debug:
         msg: "Destiny of this host is: {{ my_status }}"
+      when: "'_skip' not in ansible_host"
 
     - name: Hosts haven't really changed, but we will say they have
       debug:
         msg: "I am a changed host."
       changed_when: my_status == 'changed'
-      when: my_status == 'changed'
+      when: my_status is defined and my_status == 'changed'
 
     - name: All failhosts aboard the failboat
       fail:
         msg: "I did nothing to deserve this."
-      when: my_status == 'failed'
+      when: my_status is defined and my_status == 'failed'
 
     - name: Reach out to the unreachable hosts
       ping:
       vars:
         ansible_host: 'invalid.invalid'
-      when: my_status == 'unreachable'
+      when: my_status is defined and my_status == 'unreachable'

@@ -11,6 +11,12 @@ for i in `seq 1 25`; do
     tower-cli host create --inventory="random status inventory" --name=$HOST_NAME
 done
 
+for i in `seq 1 5`; do
+    HOST_NAME="random_status_host_$i._skip"
+    echo "  creating new host $HOST_NAME"
+    tower-cli host create --inventory="random status inventory" --name=$HOST_NAME
+done
+
 USER_OUTPUT=$(tower-cli config username)
 userval=$(echo $USER_OUTPUT| cut -d' ' -f 2)
 tower-cli credential create --name="blank SSH" --user=$userval --inputs="{}" --credential-type="Machine"

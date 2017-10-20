@@ -4,7 +4,7 @@
   gather_facts: false
   tasks:
     - set_fact:
-        my_status: "{{ ['ok','changed','unreachable','failed']|random }}"
+        my_status: "{{ ['ok','changed','unreachable','failed','ignored','rescued']|random }}"
       when: "'_skip' not in ansible_host"
 
     - name: Echo facts about what we will do to the hosts
@@ -22,6 +22,20 @@
       fail:
         msg: "I did nothing to deserve this."
       when: my_status is defined and my_status == 'failed'
+
+    - name: Ignore this failure for some hosts
+      fail:
+        msg: "<insert inspirational quote about failure>"
+      ignore_errors: true
+      when: my_status is defined and my_status == 'ignored'
+
+    - name: Fail and rescue - collection of tasks
+      block:
+        - fail:
+            msg: "HALP!!!"
+          when: my_status is defined and my_status == 'rescued'
+      rescue:
+        - debug: msg="ε-(´・｀) ﾌ"
 
     - name: Reach out to the unreachable hosts
       ping:

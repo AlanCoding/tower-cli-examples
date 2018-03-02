@@ -9,8 +9,8 @@ for i in `seq 1 25`; do
     tower-cli group create --inventory=inv$i --name=group$i --description="$cli_flag"
     tower-cli host create --name=group$i --inventory=inv$i --description="$cli_flag"
     tower-cli project create --name=proj$i --organization=Default --scm-type git --scm-url https://github.com/AlanCoding/permission-testing-playbooks.git --description="$cli_flag" --wait
-    tower-cli credential create --name=cred$i --username="pi" --password="pass" --organization=Default --kind=ssh --description="$cli_flag"
-    tower-cli job_template create --name=jt$i --inventory=inv$i --machine-credential=cred$i --project=proj$i --playbook=helloworld.yml --description="$cli_flag"
+    tower-cli credential create --name=cred$i --inputs='{"password": "pass", "username": "pi"}' --organization=Default --credential-type="Machine" --description="$cli_flag"
+    tower-cli job_template create --name=jt$i --inventory=inv$i --credential=cred$i --project=proj$i --playbook=helloworld.yml --description="$cli_flag"
     tower-cli organization create --name=org$i --description="$cli_flag"
 
     tower-cli role grant --type use --inventory inv$i --user res_perm

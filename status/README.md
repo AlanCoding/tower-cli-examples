@@ -18,3 +18,10 @@ reproduce this fully in the server via:
 source status/run_random_statuses.sh
 ```
 
+If you want to run against a local inventory that should behave in the
+exact same way as the tower-cli example, then you can run:
+
+```
+ansible-playbook -i status/inv_ref.py status/random_status.yml
+```
+

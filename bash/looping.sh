@@ -7,7 +7,7 @@ for i in `seq 1 25`; do
     echo $i
     tower-cli inventory create --name=inv$i --organization=Default --description="$cli_flag"
     tower-cli group create --inventory=inv$i --name=group$i --description="$cli_flag"
-    tower-cli host create --name=group$i --inventory=inv$i --description="$cli_flag"
+    tower-cli host create --name=host$i --inventory=inv$i --description="$cli_flag"
     tower-cli inventory_script create --name=script$i --script='#!/usr/bin/env python\nimport json\nprint json.dumps({"ungrouped": ["foobar"]})' --organization=Default
     tower-cli inventory_source create --name=source$i --source=custom --source-script=script$i --inventory=inv$i
     tower-cli project create --name=proj$i --organization=Default --scm-type git --scm-url https://github.com/AlanCoding/permission-testing-playbooks.git --description="$cli_flag" --wait

@@ -23,4 +23,15 @@ tower-cli credential create --name="blank SSH" --user=$userval --inputs="{}" --c
 
 tower-cli job_template create --name="generate random status" --inventory="random status inventory" --credential="blank SSH" --project="tower-cli examples" --playbook="status/random_status.yml"
 
+tower-cli workflow create --name "random status workflow"
+tower-cli workflow schema "random status workflow" '[{job_template: "generate random status"}]'
+
 tower-cli job launch -J "generate random status" --monitor
+if [ $? -ne 99 ]; then
+    echo "TEST FAILED: job failure was expected"
+fi
+
+tower-cli workflow_job launch --workflow-job-template 'random status workflow' --monitor
+if [ $? -ne 99 ]; then
+    echo "TEST FAILED: workflow failure was expected"
+fi
